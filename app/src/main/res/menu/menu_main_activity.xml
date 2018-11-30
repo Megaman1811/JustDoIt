@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/menuSortBy">
@@ -10,5 +11,6 @@
     </item>
     <item
         android:id="@+id/manageTask"
-        android:title="@string/menuManageTask" />
+        android:title="@string/menuManageTask"
+        android:onClick="manageScreen" />
 </menu>
