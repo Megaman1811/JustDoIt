@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void manageScreen(MenuItem item) {
-        Intent intent = new Intent(this, ManageTask.class);
+        Intent intent = new Intent(this, ManageAllTasks.class);
         startActivity(intent);
     }
 }
