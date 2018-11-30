@@ -8,5 +8,7 @@
             <item android:title="Item" />
         </menu>
     </item>
-    <item android:title="@string/menuManageTask" />
+    <item
+        android:id="@+id/manageTask"
+        android:title="@string/menuManageTask" />
 </menu>
