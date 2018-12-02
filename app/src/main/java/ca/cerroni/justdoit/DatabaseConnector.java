@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class DatabaseConnector {
         rdb = openHelper.getReadableDatabase();
     }
 
-    public ArrayList<Task> insert(Task t, ArrayList<Task> i) {
+    public Task insert(Task t) {
         ContentValues cv = new ContentValues();
         cv.put("name", t.name);
         cv.put("notes", t.notes);
@@ -38,8 +39,7 @@ public class DatabaseConnector {
         cv.put("claimed", "");
 
         wdb.insert("tasks", null, cv);
-        i.add(t);
-        return i;
+        return t;
     }
 
     public void clear() throws SQLException {
@@ -47,15 +47,35 @@ public class DatabaseConnector {
     }
 
     public ArrayList<Task> getAllTasks() {
-        Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time"},
+        ArrayList<Task> tasks = new ArrayList<>();
+        Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time","color","done"},
                 null, null, null, null, "name");
-        return null;
+        if(c.moveToFirst()) {
+            do {
+                Task t = new Task();
+                t.id = c.getInt(0);
+                t.name = c.getString(1);
+                t.notes = c.getString(2);
+                t.startDate = Date.valueOf(c.getString(3));
+                t.endDate = Date.valueOf(c.getString(4));
+                t.freq = c.getInt(5);
+                t.time = c.getString(6);
+                t.color = c.getString(7);
+                t.done = c.getInt(8) >= 1;
+                tasks.add(t);
+                Log.d("database", "ttt: "+t.startDate.toString() + "/"+t.endDate.toString());
+            }while(c.moveToNext());
+        }
+
+        Log.d("database", "MaxLen: "+tasks.size());
+
+        return tasks;
     }
 
-    public ArrayList<Task> getTasksByDate(String date) {
+    public ArrayList<Task> getTasksByDate(Date date) {
         ArrayList<Task> tasks = new ArrayList<>();
         Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done"},
-                "? between datetime(startdate) and datetime(enddate)", new String[]{ date }, null,
+                "date(?) between date(startdate) and date(enddate)", new String[]{ date.toString() }, null,
                 null, "name");
 
         if(c.moveToFirst()) {
@@ -71,6 +91,8 @@ public class DatabaseConnector {
                 tasks.add(t);
             }while(c.moveToNext());
         }
+
+        Log.d("database", "Len: "+tasks.size());
 
         return tasks;
     }

@@ -43,4 +43,9 @@ public class ItemAdapter extends ArrayAdapter<Task> {
 
         return view;
     }
+
+    public void set(ArrayList<Task> ts) {
+        clear();
+        addAll(ts);
+    }
 }
