@@ -8,7 +8,7 @@ public class Task {
     public String notes;
     public Date startDate;
     public Date endDate;
-    public Date time;
+    public String time;
     public int freq;
     public String color;
     public boolean done;

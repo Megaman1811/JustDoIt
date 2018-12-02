@@ -14,7 +14,7 @@ public class ManageAllTasks extends AppCompatActivity {
 
     ListView tasks;
 
-    ArrayList<String[]> items = new ArrayList<>();
+    ArrayList<Task> items = new ArrayList<>();
 
     ItemAdapter adapter;
 
@@ -32,8 +32,8 @@ public class ManageAllTasks extends AppCompatActivity {
                 new int[]{ R.id.item_title, R.id.item_desc, R.id.item_time, R.id.item_img }, items);
         tasks.setAdapter(adapter);
 
-        items.add(new String[]{"Hello!", "Testing", "12:00", "Image"});
-        items.add(new String[]{"test 123", "A fancy description", "2:00", "Image"});
+        //items.add(new String[]{"Hello!", "Testing", "12:00", "Image"});
+        //items.add(new String[]{"test 123", "A fancy description", "2:00", "Image"});
         adapter.notifyDataSetChanged();
 
     }

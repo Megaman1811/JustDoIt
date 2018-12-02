@@ -11,11 +11,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ItemAdapter extends ArrayAdapter<String[]> {
+public class ItemAdapter extends ArrayAdapter<Task> {
+    private static final int ITEM_TITLE = 0;
+    private static final int ITEM_DESC = 1;
+    private static final int ITEM_TIME = 2;
+    private static final int ITEM_IMG = 3;
+
     private int[] ids;
     private int res;
 
-    public ItemAdapter(Context context, int res, int[] ids, ArrayList<String[]> items) {
+    public ItemAdapter(Context context, int res, int[] ids, ArrayList<Task> items) {
         super(context, res, ids[0], items);
         this.ids = ids;
         this.res = res;
@@ -26,12 +31,14 @@ public class ItemAdapter extends ArrayAdapter<String[]> {
         LayoutInflater in = LayoutInflater.from(getContext());
         View view = in.inflate(res, parent, false);
 
-        String[] data = getItem(position);
+        Task task = getItem(position);
 
-        for(int i = 0; i < data.length-1; i++) { // -1 cause our last element is an image
-            TextView v = view.findViewById(ids[i]);
-            v.setText(data[i]);
-        }
+        TextView v = view.findViewById(ids[ITEM_TITLE]);
+        v.setText(task.name);
+        v = view.findViewById(ids[ITEM_DESC]);
+        v.setText(task.notes);
+        v = view.findViewById(ids[ITEM_TIME]);
+        v.setText(task.time);
         //TODO: image
 
         return view;

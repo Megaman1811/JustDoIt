@@ -1,5 +1,6 @@
 package ca.cerroni.justdoit;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -23,17 +24,38 @@ public class DatabaseConnector {
         rdb = openHelper.getReadableDatabase();
     }
 
-    public ArrayList<Task> getAllTaskItems() {
+    public ArrayList<Task> insert(Task t, ArrayList<Task> i) {
+        ContentValues cv = new ContentValues();
+        cv.put("name", t.name);
+        cv.put("notes", t.notes);
+        cv.put("startdate", t.startDate.toString());
+        cv.put("enddate", t.endDate.toString());
+        cv.put("time", t.time);
+        cv.put("freq", t.freq);
+        cv.put("color", t.color);
+        cv.put("done", 0);
+        cv.put("snooze", "");
+        cv.put("claimed", "");
+
+        wdb.insert("tasks", null, cv);
+        i.add(t);
+        return i;
+    }
+
+    public void clear() throws SQLException {
+        wdb.delete("tasks", null, null);
+    }
+
+    public ArrayList<Task> getAllTasks() {
         Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time"},
                 null, null, null, null, "name");
         return null;
-
     }
 
     public ArrayList<Task> getTasksByDate(String date) {
         ArrayList<Task> tasks = new ArrayList<>();
         Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done"},
-                "? between startdate and enddate", new String[]{ date }, null,
+                "? between datetime(startdate) and datetime(enddate)", new String[]{ date }, null,
                 null, "name");
 
         if(c.moveToFirst()) {
@@ -43,8 +65,9 @@ public class DatabaseConnector {
                 t.notes = c.getString(1);
                 t.startDate = Date.valueOf(c.getString(2));
                 t.freq = c.getInt(3);
-                t.time = Date.valueOf(c.getString(4));
-                // TODO: color, done
+                t.time = c.getString(4);
+                t.color = c.getString(5);
+                t.done = c.getInt(6) >= 1;
                 tasks.add(t);
             }while(c.moveToNext());
         }
