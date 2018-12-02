@@ -3,4 +3,6 @@
     <string name="title_activity_add_task">addTask</string>
     <string name="menuSortBy">Sort By</string>
     <string name="menuManageTask">Manage Tasks</string>
+    <string name="AddTask">Add Task</string>
+    <string name="SaveTask">Save Task</string>
 </resources>

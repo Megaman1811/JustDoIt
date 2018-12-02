@@ -6,12 +6,40 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ManageAllTasks"
+    tools:layout_editor_absoluteY="81dp"
     tools:showIn="@layout/activity_manage_task">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="395dp"
-        android:layout_height="678dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:listitem="@layout/recycler_view_item" />
+    <ListView
+        android:id="@+id/taskList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/AddTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/taskList"
+        app:layout_constraintEnd_toStartOf="@+id/AddTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/AddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:onClick="OnClick"
+        android:text="@string/AddTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchView"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
