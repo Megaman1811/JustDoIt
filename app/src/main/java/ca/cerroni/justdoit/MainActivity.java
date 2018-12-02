@@ -48,7 +48,23 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 Date d = new Date(year, month, dayOfMonth);
                 Log.d("calendar", d.toString() + "//" + adapter.getCount());
-                adapter.set(dbc.getTasksByDate(d));
+                ArrayList<Task> got = dbc.getTasksByDate(d);
+                boolean occurs = false;
+                for(int i = 0; i < got.size(); i++) {
+                    Task t = got.get(i);
+                    Date start = t.startDate;
+                    while(start.before(t.endDate)) {
+                        if(start.equals(d)) {
+                            occurs = true;
+                            break;
+                        }
+                        start.setDate(start.getDate()+t.freq);
+                    }
+                    if(!occurs) {
+                        got.remove(i);
+                    }
+                }
+                adapter.set(got);
                 dbc.getAllTasks();
                 adapter.notifyDataSetChanged();
             }

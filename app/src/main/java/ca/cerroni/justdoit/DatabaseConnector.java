@@ -74,7 +74,7 @@ public class DatabaseConnector {
 
     public ArrayList<Task> getTasksByDate(Date date) {
         ArrayList<Task> tasks = new ArrayList<>();
-        Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done"},
+        Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done","enddate"},
                 "date(?) between date(startdate) and date(enddate)", new String[]{ date.toString() }, null,
                 null, "name");
 
@@ -88,6 +88,7 @@ public class DatabaseConnector {
                 t.time = c.getString(4);
                 t.color = c.getString(5);
                 t.done = c.getInt(6) >= 1;
+                t.endDate = Date.valueOf(c.getString(7));
                 tasks.add(t);
             }while(c.moveToNext());
         }
