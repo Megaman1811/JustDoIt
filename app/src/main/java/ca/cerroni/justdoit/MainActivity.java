@@ -85,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<Task> getTasksAtCurDate(ArrayList<Task> got) {
+        Log.d("datefind", "" + got.size());
         boolean occurs = false;
         for(int i = 0; i < got.size(); i++) {
             Task t = got.get(i);
             Date start = t.startDate;
+            Log.d("datefind", "{1} name: "+t.name+" start: " + start.toString() + " end: "+t.endDate.toString());
             while(start.before(t.endDate) || start.equals(t.endDate)) {
-                if(start.equals(cDate)) {
+                Log.d("datefind", "{2} name: "+t.name+" start: " + start.toString() + " cdate: "+cDate.toString()+" eq: "+(start.equals(cDate)?"true":"false"));
+                if(start.equals(cDate) || start.toString().equals(cDate.toString())) {
                     Log.d("datefind", "Found: "+start.toString()+" within: "+cDate.toString() +" at: "+t.startDate.toString());
                     occurs = true;
                     break;
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        cDate = new Date(cview.getDate());
         adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
         adapter.notifyDataSetChanged();
     }
