@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseConnector dbc;
     ListView tasks;
     CalendarView cview;
+    Date cDate;
 
     //ArrayList<Task> items = new ArrayList<>();
 
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         dbc = new DatabaseConnector(this);
         dbc.open();
         dbc.clear();
-
         tasks = findViewById(R.id.taskList);
 
         adapter = new ItemAdapter(this, R.layout.recycler_view_item,
@@ -42,19 +42,20 @@ public class MainActivity extends AppCompatActivity {
         tasks.setAdapter(adapter);
 
         cview = findViewById(R.id.calendarView);
+        cDate = new Date(cview.getDate());
 
         cview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Date d = new Date(year, month, dayOfMonth);
-                Log.d("calendar", d.toString() + "//" + adapter.getCount());
-                ArrayList<Task> got = dbc.getTasksByDate(d);
+                cDate = new Date(year, month, dayOfMonth);
+                Log.d("calendar", cDate.toString() + "//" + adapter.getCount());
+                ArrayList<Task> got = dbc.getTasksByDate(cDate);
                 boolean occurs = false;
                 for(int i = 0; i < got.size(); i++) {
                     Task t = got.get(i);
                     Date start = t.startDate;
                     while(start.before(t.endDate)) {
-                        if(start.equals(d)) {
+                        if(start.equals(cDate)) {
                             occurs = true;
                             break;
                         }
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         t1.time = "5:22";
         t1.freq = 1;
         t1.color = "ff0000";
-        adapter.add(dbc.insert(t1));
+        dbc.insert(t1);
 
         t1 = new Task();
         t1.name = "Newer task";
@@ -90,11 +91,18 @@ public class MainActivity extends AppCompatActivity {
         t1.time = "7:35";
         t1.freq = 2;
         t1.color = "00ff00";
-        adapter.add(dbc.insert(t1));
+        dbc.insert(t1);
+
+        adapter.set(dbc.getTasksByDate(cDate));
 
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.set(dbc.getTasksByDate(cDate));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,28 +12,28 @@ import java.util.ArrayList;
 
 public class ManageAllTasks extends AppCompatActivity {
 
+    DatabaseConnector dbc;
     ListView tasks;
-
-    ArrayList<Task> items = new ArrayList<>();
-
-    ItemAdapter adapter;
+    ManItemAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_task);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        dbc = new DatabaseConnector(this);
+        dbc.open();
 
         tasks = findViewById(R.id.taskList);
 
-        adapter = new ItemAdapter(this, R.layout.recycler_view_item,
-                new int[]{ R.id.item_title, R.id.item_desc, R.id.item_time, R.id.item_img }, items);
+        adapter = new ManItemAdapter(this, R.layout.recycler_view_manitem,
+                new int[]{ R.id.mani_title, R.id.mani_desc, R.id.mani_img }, new ArrayList<Task>());
         tasks.setAdapter(adapter);
 
-        //items.add(new String[]{"Hello!", "Testing", "12:00", "Image"});
-        //items.add(new String[]{"test 123", "A fancy description", "2:00", "Image"});
+        adapter.addAll(dbc.getAllTasks());
+
         adapter.notifyDataSetChanged();
 
     }

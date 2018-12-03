@@ -46,6 +46,10 @@ public class DatabaseConnector {
         wdb.delete("tasks", null, null);
     }
 
+    public void del(int id) throws SQLException {
+        wdb.delete("tasks", "id=?", new String[]{""+id});
+    }
+
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time","color","done"},
