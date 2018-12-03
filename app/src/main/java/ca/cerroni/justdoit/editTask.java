@@ -64,7 +64,12 @@ public class editTask extends AppCompatActivity {
         } else {
             dbc.insert(task);
         }
-        dbc.close();
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbc.close();
     }
 }

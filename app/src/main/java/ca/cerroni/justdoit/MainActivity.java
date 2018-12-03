@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.set(dbc.getTasksByDate(cDate));
+        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
         adapter.notifyDataSetChanged();
     }
 
@@ -122,5 +122,11 @@ public class MainActivity extends AppCompatActivity {
     public void manageScreen(MenuItem item) {
         Intent intent = new Intent(this, ManageAllTasks.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbc.close();
     }
 }

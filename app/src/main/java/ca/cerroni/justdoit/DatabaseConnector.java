@@ -120,4 +120,28 @@ public class DatabaseConnector {
 
         return tasks;
     }
+
+    public ArrayList<Task> searchTasksByName(String search) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time","color","done"},
+                "name like ? collate nocase", new String[]{ "%"+search+"%" }, null,
+                null, "name");
+
+        if(c.moveToFirst()) {
+            do {
+                Task t = new Task();
+                t.id = c.getInt(0);
+                t.name = c.getString(1);
+                t.notes = c.getString(2);
+                t.startDate = Date.valueOf(c.getString(3));
+                t.endDate = Date.valueOf(c.getString(4));
+                t.freq = c.getInt(5);
+                t.time = c.getString(6);
+                t.color = c.getString(7);
+                t.done = c.getInt(8) >= 1;
+                tasks.add(t);
+            }while(c.moveToNext());
+        }
+        return tasks;
+    }
 }
