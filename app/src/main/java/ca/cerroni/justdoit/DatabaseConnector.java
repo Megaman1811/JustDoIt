@@ -50,6 +50,19 @@ public class DatabaseConnector {
         wdb.delete("tasks", "id=?", new String[]{""+id});
     }
 
+    public void update(Task t) {
+        ContentValues cv = new ContentValues();
+        cv.put("name", t.name);
+        cv.put("notes", t.notes);
+        cv.put("startdate", t.startDate.toString());
+        cv.put("enddate", t.endDate.toString());
+        cv.put("time", t.time);
+        cv.put("freq", t.freq);
+        cv.put("color", t.color);
+
+        wdb.update("tasks", cv, "id=?", new String[]{ ""+t.id });
+    }
+
     public ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time","color","done"},
