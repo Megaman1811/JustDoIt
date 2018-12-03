@@ -12,45 +12,46 @@
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        app:layout_constraintBottom_toTopOf="@+id/Description"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/Description"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="21dp"
         android:ems="10"
         android:inputType="textLongMessage"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
 
 
     <TextView
         android:id="@+id/StartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="4dp"
         android:text="Start Date :"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Start"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/Start"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="15dp"
         android:ems="10"
         android:inputType="textPersonName|date"
+        app:layout_constraintBottom_toBottomOf="@+id/StartDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Description" />
+        app:layout_constraintStart_toEndOf="@+id/StartDate" />
 
     <Button
         android:id="@+id/button3"
@@ -67,85 +68,106 @@
         android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginEnd="4dp"
         android:text="End Date:"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/End"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/End" />
 
     <EditText
         android:id="@+id/End"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Start"
         app:layout_constraintTop_toBottomOf="@+id/Start" />
 
     <TextView
         android:id="@+id/Frequency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="121dp"
+        android:layout_marginBottom="124dp"
         android:text="Frequency:"
         android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EndDate" />
+        app:layout_constraintTop_toTopOf="@+id/Time" />
 
     <EditText
         android:id="@+id/Colort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textNoSuggestions"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/freq"
+        app:layout_constraintStart_toStartOf="@+id/freq" />
+
+    <EditText
+        android:id="@+id/Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintStart_toStartOf="@+id/End"
         app:layout_constraintTop_toBottomOf="@+id/End" />
 
     <TextView
         android:id="@+id/colort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginEnd="4dp"
         android:text="Color:"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EndDate" />
+        app:layout_constraintBottom_toBottomOf="@+id/Colort"
+        app:layout_constraintEnd_toStartOf="@+id/Colort" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Time:"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Time"
+        app:layout_constraintEnd_toStartOf="@+id/Time" />
 
     <EditText
         android:id="@+id/freq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:ems="10"
         android:inputType="numberSigned"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="317dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/Frequency"
+        app:layout_constraintStart_toEndOf="@+id/Frequency" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="4dp"
         android:text="Name:"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Name"
-        app:layout_constraintVertical_bias="0.833" />
+        app:layout_constraintEnd_toStartOf="@+id/Name" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
         android:text="Description:"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Description"
-        app:layout_constraintEnd_toStartOf="@+id/Description" />
+        app:layout_constraintEnd_toStartOf="@+id/Description"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

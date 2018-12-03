@@ -54,7 +54,7 @@ public class ManItemAdapter extends ArrayAdapter<Task> {
             public void onClick(View v) {
                 DatabaseConnector dbc = new DatabaseConnector(v.getContext());
                 dbc.open();
-                Log.d("temp", "EDIT_TASK_ID: "+task.id);
+                Log.d("temp", "DEL_TASK_ID: "+task.id);
                 dbc.del(task.id);
                 set(dbc.getAllTasks());
                 notifyDataSetChanged();
