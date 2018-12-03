@@ -25,7 +25,13 @@ public class DatabaseConnector {
         rdb = openHelper.getReadableDatabase();
     }
 
+    public void close() throws SQLException {
+        wdb.close();
+        rdb.close();
+    }
+
     public Task insert(Task t) {
+        Log.d("insert", "INSERT: "+t.startDate.toString());
         ContentValues cv = new ContentValues();
         cv.put("name", t.name);
         cv.put("notes", t.notes);
@@ -110,7 +116,7 @@ public class DatabaseConnector {
             }while(c.moveToNext());
         }
 
-        Log.d("database", "Len: "+tasks.size());
+        Log.d("database", "Check: "+date.toString()+" Len: "+tasks.size());
 
         return tasks;
     }

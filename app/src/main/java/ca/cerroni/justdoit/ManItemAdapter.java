@@ -1,6 +1,7 @@
 package ca.cerroni.justdoit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class ManItemAdapter extends ArrayAdapter<Task> {
     private static final int ITEM_TITLE = 0;
@@ -45,7 +48,9 @@ public class ManItemAdapter extends ArrayAdapter<Task> {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Edit window using task
+                Intent in = new Intent(v.getContext(), editTask.class);
+                in.putExtra("TASK", task);
+                startActivity(v.getContext(), in, null);
                 Log.d("temp", "EDIT_TASK_ID: "+task.id);
             }
         });
@@ -58,6 +63,7 @@ public class ManItemAdapter extends ArrayAdapter<Task> {
                 dbc.del(task.id);
                 set(dbc.getAllTasks());
                 notifyDataSetChanged();
+                dbc.close();
             }
         });
 

@@ -38,6 +38,19 @@ public class ManageAllTasks extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.set(dbc.getAllTasks());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbc.close();
+    }
+
     public void OnClick(View view){
         Intent intent = new Intent(this, editTask.class);
         startActivity(intent);
