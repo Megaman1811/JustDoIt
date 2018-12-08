@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class Task implements Parcelable {
-    //public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public int id;
     public String name;
     public String notes;

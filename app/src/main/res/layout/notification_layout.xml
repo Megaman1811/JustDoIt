@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    android:rowCount="2"
+    android:alignmentMode="alignMargins">
 
   <ImageView
       android:id="@+id/mani_img"
@@ -16,58 +19,71 @@
       app:layout_constraintTop_toTopOf="parent"
       tools:src="@tools:sample/avatars" />
 
-  <TextView
-      android:id="@+id/mani_title"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
-      android:ellipsize="end"
-      android:isScrollContainer="false"
-      android:maxLines="1"
-      android:scrollHorizontally="false"
-      android:textColor="@android:color/black"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toTopOf="@+id/mani_desc"
-      app:layout_constraintEnd_toEndOf="@+id/mani_desc"
-      app:layout_constraintStart_toStartOf="@+id/mani_desc"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:text="@tools:sample/full_names" />
+    <TextView
+        android:id="@+id/mani_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:isScrollContainer="false"
+        android:maxLines="1"
+        android:scrollHorizontally="false"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/mani_desc"
+        app:layout_constraintEnd_toEndOf="@+id/mani_desc"
+        app:layout_constraintStart_toStartOf="@+id/mani_desc"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
 
-  <TextView
-      android:id="@+id/mani_desc"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_marginStart="68dp"
-      android:layout_marginEnd="19dp"
-      android:layout_marginBottom="3dp"
-      android:ellipsize="end"
-      android:maxLines="1"
-      android:scrollHorizontally="false"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/mani_edit"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/mani_title"
-      tools:text="@tools:sample/lorem[4:10]" />
+    <TextView
+        android:id="@+id/mani_desc"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollHorizontally="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/mani_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mani_title"
+        tools:text="@tools:sample/lorem[4:10]" />
 
     <ImageButton
         android:id="@+id/mani_edit"
         android:layout_width="58dp"
         android:layout_height="55dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="61dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mani_desc"
         app:layout_constraintTop_toTopOf="@+id/mani_del"
-        app:srcCompat="@drawable/ic_alarm" />
+        android:src="@drawable/ic_alarm" />
 
     <ImageButton
         android:id="@+id/mani_del"
         android:layout_width="56dp"
         android:layout_height="55dp"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="5dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_check" />
+        android:src="@drawable/ic_check" />
 
-</android.support.constraint.ConstraintLayout>
+</GridLayout>

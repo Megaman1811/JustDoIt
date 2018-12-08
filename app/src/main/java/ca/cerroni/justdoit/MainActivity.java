@@ -1,5 +1,9 @@
 package ca.cerroni.justdoit;
 
+import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbc = new DatabaseConnector(this);
         dbc.open();
-        dbc.clear();
+        //dbc.clear();
         tasks = findViewById(R.id.taskList);
 
         adapter = new ItemAdapter(this, R.layout.recycler_view_item,
@@ -58,19 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 cDate = Date.valueOf(year+"-"+(month+1)+"-"+dayOfMonth);
                 Log.d("calendar", cDate.toString() + "//" + adapter.getCount());
 
-                adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
+                adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
                 //dbc.getAllTasks();
                 adapter.notifyDataSetChanged();
             }
         });
 
-        Task t1 = new Task();
+        /*Task t1 = new Task();
         t1.name = "Task thing!";
         t1.notes = "It's a task";
-        Date d1 = Date.valueOf("2018-12-07");
+        Date d1 = Date.valueOf("2018-12-08");
         t1.startDate = d1;
         t1.endDate = d1;
-        t1.time = "5:22pm";
+        t1.time = "2:22am";
         t1.freq = 1;
         t1.color = "ff0000";
         dbc.insert(t1);
@@ -95,14 +99,21 @@ public class MainActivity extends AppCompatActivity {
         t3.time = "7:00am";
         t3.freq = 1;
         t3.color = "ff0000";
-        dbc.insert(t3);
+        dbc.insert(t3);*/
 
-        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
+        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
 
         adapter.notifyDataSetChanged();
+        if(!JustDoItAlerts.running) {
+            Intent intent = new Intent(this, JustDoItAlerts.class);
+            startService(intent);
+            Log.d("JDIService", "Ran");
+        } else {
+            Log.d("JDIService", "I'm runnin' 'ere!");
+        }
     }
 
-    private ArrayList<Task> getTasksAtCurDate(ArrayList<Task> got) {
+    public static ArrayList<Task> getTasksAtCurDate(ArrayList<Task> got, Date cDate) {
         Log.d("datefind", "" + got.size());
         boolean occurs = false;
         for(int i = 0; i < got.size(); i++) {
@@ -128,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         cDate = new Date(cview.getDate());
-        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
+        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
         adapter.notifyDataSetChanged();
     }
 

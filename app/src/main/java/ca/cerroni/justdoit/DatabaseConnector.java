@@ -67,7 +67,7 @@ public class DatabaseConnector {
         cv.put("freq", t.freq);
         cv.put("color", t.color);
         if(t.done != null){
-            cv.put("done", t.done.toString());
+            cv.put("done", t.done.getTime());
         } else
             cv.put("done", 0);
         if(t.snooze != null) {
@@ -81,6 +81,26 @@ public class DatabaseConnector {
             cv.put("claimed", 0);
 
         wdb.update("tasks", cv, "id=?", new String[]{ ""+t.id });
+    }
+
+    public Task getTask(int id) {
+        Task t = new Task();
+        Cursor c = rdb.query("tasks", new String[]{"id","name","notes","startdate","enddate","freq","time","color","done","snooze","claimed"},
+                "id=?", new String[]{""+id}, null, null, "id");
+        if(c.moveToFirst()) {
+            t.id = c.getInt(0);
+            t.name = c.getString(1);
+            t.notes = c.getString(2);
+            t.startDate = Date.valueOf(c.getString(3));
+            t.endDate = Date.valueOf(c.getString(4));
+            t.freq = c.getInt(5);
+            t.time = c.getString(6);
+            t.color = c.getString(7);
+            t.done = new Date(c.getLong(8));
+            t.snooze = new Date(c.getLong(9));
+            t.claimed = new Date(c.getLong(10));
+        }
+        return t;
     }
 
     public ArrayList<Task> getAllTasks(String sort) {
