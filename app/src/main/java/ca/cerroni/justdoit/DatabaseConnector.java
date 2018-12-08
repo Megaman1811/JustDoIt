@@ -41,17 +41,9 @@ public class DatabaseConnector {
         cv.put("time", t.time);
         cv.put("freq", t.freq);
         cv.put("color", t.color);
-        cv.put("done", "");
-        if(t.snooze != null) {
-            SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
-            cv.put("snooze", time.format(t.snooze));
-        } else
-            cv.put("snooze", "");
-
-        if(t.claimed != null) {
-            cv.put("claimed", t.claimed.toString());
-        } else
-            cv.put("claimed", "");
+        cv.put("done", 0);
+        cv.put("snooze", 0);
+        cv.put("claimed", 0);
 
         wdb.insert("tasks", null, cv);
         return t;
@@ -74,17 +66,19 @@ public class DatabaseConnector {
         cv.put("time", t.time);
         cv.put("freq", t.freq);
         cv.put("color", t.color);
-        cv.put("done", t.done.toString());
-        if(t.snooze != null) {
-            SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
-            cv.put("snooze", time.format(t.snooze));
+        if(t.done != null){
+            cv.put("done", t.done.toString());
         } else
-            cv.put("snooze", "");
+            cv.put("done", 0);
+        if(t.snooze != null) {
+            cv.put("snooze", t.snooze.getTime());
+        } else
+            cv.put("snooze", 0);
 
         if(t.claimed != null) {
-            cv.put("claimed", t.claimed.toString());
+            cv.put("claimed", t.claimed.getTime());
         } else
-            cv.put("claimed", "");
+            cv.put("claimed", 0);
 
         wdb.update("tasks", cv, "id=?", new String[]{ ""+t.id });
     }
@@ -104,18 +98,9 @@ public class DatabaseConnector {
                 t.freq = c.getInt(5);
                 t.time = c.getString(6);
                 t.color = c.getString(7);
-                t.done = Date.valueOf(c.getString(8));
-                /*String gt = c.getString(9);
-                if(gt.length() > 0) {
-                    try {
-                        SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
-                        t.snooze = new Date(time.parse(gt).getTime());
-                    } catch(Exception e) {}
-                }
-                String claim = c.getString(10);
-                if(claim.length() > 0) {
-                    t.claimed = Date.valueOf(claim);
-                }*/
+                t.done = new Date(c.getLong(8));
+                t.snooze = new Date(c.getLong(9));
+                t.claimed = new Date(c.getLong(10));
                 tasks.add(t);
                 Log.d("database", "ttt: "+t.startDate.toString() + "/"+t.endDate.toString());
             }while(c.moveToNext());
@@ -128,7 +113,7 @@ public class DatabaseConnector {
 
     public ArrayList<Task> getTasksByDate(Date date) {
         ArrayList<Task> tasks = new ArrayList<>();
-        Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done","enddate","snooze","claimed"},
+        Cursor c = rdb.query("tasks", new String[]{"name","notes","startdate","freq","time","color","done","enddate","snooze","claimed","id"},
                 "date(?) between date(startdate) and date(enddate)", new String[]{ date.toString() }, null,
                 null, "name");
 
@@ -141,19 +126,11 @@ public class DatabaseConnector {
                 t.freq = c.getInt(3);
                 t.time = c.getString(4);
                 t.color = c.getString(5);
-                t.done = Date.valueOf(c.getString(6));
+                t.done = new Date(c.getLong(6));
                 t.endDate = Date.valueOf(c.getString(7));
-                String gt = c.getString(8);
-                if(gt.length() > 0) {
-                    try {
-                        SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
-                        t.snooze = new Date(time.parse(gt).getTime());
-                    } catch(Exception e) {}
-                }
-                String claim = c.getString(9);
-                if(claim.length() > 0) {
-                    t.claimed = Date.valueOf(claim);
-                }
+                t.snooze = new Date(c.getLong(8));
+                t.claimed = new Date(c.getLong(9));
+                t.id = c.getInt(10);
                 tasks.add(t);
             }while(c.moveToNext());
         }
@@ -180,7 +157,7 @@ public class DatabaseConnector {
                 t.freq = c.getInt(5);
                 t.time = c.getString(6);
                 t.color = c.getString(7);
-                t.done = Date.valueOf(c.getString(8));
+                t.done = new Date(c.getLong(8));
                 tasks.add(t);
             }while(c.moveToNext());
         }

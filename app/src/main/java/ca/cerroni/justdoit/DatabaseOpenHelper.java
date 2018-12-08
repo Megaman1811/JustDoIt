@@ -24,8 +24,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 "freq integer," +
                 "color text," +
                 "done integer," +
-                "snooze text," +
-                "claimed text" +
+                "snooze integer," +
+                "claimed integer" +
                 ");");
     }
 

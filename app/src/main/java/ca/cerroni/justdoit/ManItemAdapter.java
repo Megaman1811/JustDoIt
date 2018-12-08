@@ -69,7 +69,6 @@ public class ManItemAdapter extends ArrayAdapter<Task> {
                 Intent in = new Intent(v.getContext(), editTask.class);
                 in.putExtra("TASK", task);
                 startActivity(v.getContext(), in, null);
-                Log.d("temp", "EDIT_TASK_ID: "+task.id);
             }
         });
         del.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +76,6 @@ public class ManItemAdapter extends ArrayAdapter<Task> {
             public void onClick(View v) {
                 DatabaseConnector dbc = new DatabaseConnector(v.getContext());
                 dbc.open();
-                Log.d("temp", "DEL_TASK_ID: "+task.id);
                 dbc.del(task.id);
                 set(dbc.getAllTasks(sort));
                 notifyDataSetChanged();

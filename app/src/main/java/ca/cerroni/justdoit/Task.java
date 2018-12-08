@@ -4,8 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class Task implements Parcelable {
+    //public static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public int id;
     public String name;
     public String notes;
@@ -33,7 +35,9 @@ public class Task implements Parcelable {
         dest.writeString(time);
         dest.writeInt(freq);
         dest.writeString(color);
-        dest.writeString(color);
+        dest.writeLong(done.getTime());
+        dest.writeLong(snooze.getTime());
+        dest.writeLong(claimed.getTime());
     }
 
     public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>(){
@@ -49,6 +53,9 @@ public class Task implements Parcelable {
             t.time = s.readString();
             t.freq = s.readInt();
             t.color = s.readString();
+            t.done = new Date(s.readLong());
+            t.snooze = new Date(s.readLong());
+            t.claimed = new Date(s.readLong());
             return t;
         }
 

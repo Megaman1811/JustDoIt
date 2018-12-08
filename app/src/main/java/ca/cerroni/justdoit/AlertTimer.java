@@ -52,7 +52,7 @@ public class AlertTimer extends TimerTask {
         Intent snooze = new Intent(cont, SnoozeReceiver.class);
         snooze.putExtra("TASK", tsk);
 
-        rv.setOnClickPendingIntent(R.id.mani_edit, PendingIntent.getBroadcast(cont, 0, new Intent(), 0)); // Actually snooze
+        rv.setOnClickPendingIntent(R.id.mani_edit, PendingIntent.getBroadcast(cont, 0, snooze, 0)); // Actually snooze
 
 
         Notification nBuilder = new NotificationCompat.Builder(cont, "justdoit")
