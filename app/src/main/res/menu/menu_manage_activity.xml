@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menuSortBy">
+        <menu>
+            <item
+                android:onClick="sortName"
+                android:title="Name" />
+            <item
+                android:onClick="sortDate"
+                android:title="Date" />
+        </menu>
+    </item>
+</menu>

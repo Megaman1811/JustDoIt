@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         dbc = new DatabaseConnector(this);
         dbc.open();
         dbc.clear();
@@ -42,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
         tasks.setAdapter(adapter);
 
         cview = findViewById(R.id.calendarView);
+
+        if(savedInstanceState != null) {
+            cview.setDate(savedInstanceState.getLong("pickedDate"));
+        }
+
         cDate = new Date(cview.getDate());
+
         Log.d("calendar", "CurDate: "+cDate.toString());
 
         cview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -60,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         Task t1 = new Task();
         t1.name = "Task thing!";
         t1.notes = "It's a task";
-        Date d1 = Date.valueOf("2018-12-01");
+        Date d1 = Date.valueOf("2018-12-07");
         t1.startDate = d1;
         t1.endDate = d1;
-        t1.time = "5:22";
+        t1.time = "5:22pm";
         t1.freq = 1;
         t1.color = "ff0000";
         dbc.insert(t1);
@@ -72,12 +79,23 @@ public class MainActivity extends AppCompatActivity {
         t1.name = "Newer task";
         t1.notes = "It's yet another task";
         t1.startDate = d1;
-        Date d2 = Date.valueOf("2018-12-03");
+        Date d2 = Date.valueOf("2018-12-13");
         t1.endDate = d2;
-        t1.time = "7:35";
+        t1.time = "7:35pm";
         t1.freq = 2;
         t1.color = "00ff00";
         dbc.insert(t1);
+
+        Task t3 = new Task();
+        t3.name = "Wake up early!";
+        t3.notes = "Isn't that cool";
+        Date d3 = Date.valueOf("2018-12-01");
+        t3.startDate = d3;
+        t3.endDate = d3;
+        t3.time = "7:00am";
+        t3.freq = 1;
+        t3.color = "ff0000";
+        dbc.insert(t3);
 
         adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate)));
 
@@ -90,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             Task t = got.get(i);
             Date start = t.startDate;
             while(start.before(t.endDate) || start.equals(t.endDate)) {
-                if(start.equals(cDate)) {
+                if(start.equals(cDate) || start.toString().equals(cDate.toString())) { // Try to ignore time
                     Log.d("datefind", "Found: "+start.toString()+" within: "+cDate.toString() +" at: "+t.startDate.toString());
                     occurs = true;
                     break;
@@ -116,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main_activity, menu);
         return true;
-
     }
 
     public void manageScreen(MenuItem item) {
@@ -128,5 +145,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         dbc.close();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putLong("pickedDate", cDate.getTime());
     }
 }

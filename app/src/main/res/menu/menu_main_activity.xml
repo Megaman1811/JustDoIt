@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/menuSortBy">
-        <menu>
-            <item android:title="Item" />
-            <item android:title="Item" />
-        </menu>
-    </item>
     <item
         android:id="@+id/manageTask"
         android:title="@string/menuManageTask"

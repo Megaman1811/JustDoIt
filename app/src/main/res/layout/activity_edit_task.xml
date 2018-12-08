@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:isScrollContainer="true"
+    android:overScrollMode="always"
+    android:scrollbars="vertical"
+    android:verticalScrollbarPosition="right"
     tools:context=".editTask"
     tools:layout_editor_absoluteY="81dp">
 
@@ -48,7 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:ems="10"
-        android:inputType="textPersonName|date"
+        android:focusable="false"
+        android:inputType="date"
         app:layout_constraintBottom_toBottomOf="@+id/StartDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/StartDate" />
@@ -69,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
+        android:layout_marginBottom="1dp"
         android:text="End Date:"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/End"
@@ -80,6 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="@+id/Start"
         app:layout_constraintTop_toBottomOf="@+id/Start" />
@@ -89,29 +96,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="121dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginTop="21dp"
         android:text="Frequency:"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Time" />
+        app:layout_constraintTop_toBottomOf="@+id/colort" />
 
     <EditText
         android:id="@+id/Colort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="9dp"
         android:ems="10"
         android:inputType="textNoSuggestions"
-        app:layout_constraintBottom_toTopOf="@+id/freq"
-        app:layout_constraintStart_toStartOf="@+id/freq" />
+        app:layout_constraintStart_toStartOf="@+id/Time"
+        app:layout_constraintTop_toBottomOf="@+id/Time" />
 
     <EditText
         android:id="@+id/Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="time"
         app:layout_constraintStart_toStartOf="@+id/End"
@@ -121,7 +126,7 @@
         android:id="@+id/colort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="3dp"
         android:text="Color:"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/Colort"

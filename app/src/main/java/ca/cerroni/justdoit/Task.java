@@ -14,7 +14,7 @@ public class Task implements Parcelable {
     public String time;
     public int freq;
     public String color;
-    public boolean done;
+    public Date done;
     public Date snooze;
     public Date claimed;
 
@@ -32,6 +32,7 @@ public class Task implements Parcelable {
         dest.writeString(endDate.toString());
         dest.writeString(time);
         dest.writeInt(freq);
+        dest.writeString(color);
         dest.writeString(color);
     }
 
