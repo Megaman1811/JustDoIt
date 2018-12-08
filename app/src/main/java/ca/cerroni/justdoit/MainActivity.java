@@ -1,6 +1,10 @@
 package ca.cerroni.justdoit;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Date cDate;
 
     ItemAdapter adapter;
-    boolean bootup = false;
+    boolean bootup;
 
     public MainActivity() {
         bootup = true;
@@ -29,42 +33,72 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-
-        dbc = new DatabaseConnector(this);
-        dbc.open();
-        //dbc.clear(); // For use with test data
-        tasks = findViewById(R.id.taskList);
-
-        adapter = new ItemAdapter(this, R.layout.recycler_view_item,
-                new int[]{ R.id.item_title, R.id.item_desc, R.id.item_time, R.id.item_img }, new ArrayList<Task>());
-        tasks.setAdapter(adapter);
-
-        cview = findViewById(R.id.calendarView);
-
-        if(savedInstanceState != null) {
-            bootup = false;
-            cview.setDate(savedInstanceState.getLong("pickedDate"));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "justdoitnotifs";
+            String description = "Your Alerts";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(name.toString(), name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
         }
 
-        cDate = new Date(cview.getDate());
 
-        Log.d("calendar", "CurDate: "+cDate.toString());
+    setContentView(R.layout.activity_main);
 
-        cview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                cDate = Date.valueOf(year+"-"+(month+1)+"-"+dayOfMonth);
-                Log.d("calendar", cDate.toString() + "//" + adapter.getCount());
 
-                adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
-                //dbc.getAllTasks();
-                adapter.notifyDataSetChanged();
-            }
-        });
+    dbc =new
 
-        /* TEST DATA *//*
+    DatabaseConnector(this);
+        dbc.open();
+    //dbc.clear(); // For use with test data
+    tasks =
+
+    findViewById(R.id.taskList);
+
+    adapter =new
+
+    ItemAdapter(this,R.layout.recycler_view_item,
+                new int[] {
+        R.id.item_title, R.id.item_desc, R.id.item_time, R.id.item_img
+    },new ArrayList<Task>());
+        tasks.setAdapter(adapter);
+
+    cview =
+
+    findViewById(R.id.calendarView);
+
+        if(savedInstanceState !=null)
+
+    {
+        bootup = false;
+        cview.setDate(savedInstanceState.getLong("pickedDate"));
+    }
+
+    cDate =new
+
+    Date(cview.getDate());
+
+        Log.d("calendar","CurDate: "+cDate.toString());
+
+        cview.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+
+    {
+        @Override
+        public void onSelectedDayChange (CalendarView view,int year, int month, int dayOfMonth){
+        cDate = Date.valueOf(year + "-" + (month + 1) + "-" + dayOfMonth);
+        Log.d("calendar", cDate.toString() + "//" + adapter.getCount());
+
+        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
+        //dbc.getAllTasks();
+        adapter.notifyDataSetChanged();
+    }
+    });
+
+    /* TEST DATA *//*
         Task t1 = new Task();
         t1.name = "Task thing!";
         t1.notes = "It's a task";
@@ -97,43 +131,51 @@ public class MainActivity extends AppCompatActivity {
         t3.freq = 1;
         t3.color = "ff0000";
         dbc.insert(t3);*/
-        adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
+        adapter.set(
+
+    getTasksAtCurDate(dbc.getTasksByDate(cDate),cDate));
 
         adapter.notifyDataSetChanged();
-        if(!JustDoItAlerts.running) {
-            Intent intent = new Intent(this, JustDoItAlerts.class);
-            startService(intent);
-            Log.d("JDIService", "Ran");
-        } else {
-            Log.d("JDIService", "I'm runnin' 'ere!");
-        }
+        if(!JustDoItAlerts.running)
 
-        //if(dbc.getHelp()) { // Commented for presentation/debug
-        //    dbc.setHelp();
-            if(bootup) {
-                Intent intent = new Intent(this, WelcomeActivity.class);
-                startActivity(intent);
-                bootup = false;
-            }
-        //}
+    {
+        Intent intent = new Intent(this, JustDoItAlerts.class);
+        startService(intent);
+        Log.d("JDIService", "Ran");
+    } else
+
+    {
+        Log.d("JDIService", "I'm runnin' 'ere!");
     }
+
+    //if(dbc.getHelp()) { // Commented for presentation/debug
+    //    dbc.setHelp();
+            if(bootup)
+
+    {
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
+        bootup = false;
+    }
+    //}
+}
 
     public static ArrayList<Task> getTasksAtCurDate(ArrayList<Task> got, Date cDate) {
         Log.d("datefind", "" + got.size());
         boolean occurs = false;
-        for(int i = 0; i < got.size(); i++) {
+        for (int i = 0; i < got.size(); i++) {
             Task t = got.get(i);
             Date start = t.startDate;
-            Log.d("datefind", "{1} name: "+t.name+" start: " + start.toString() + " end: "+t.endDate.toString());
-            while(start.before(t.endDate) || start.equals(t.endDate)) {
-                if(start.equals(cDate) || start.toString().equals(cDate.toString())) { // Try to ignore time
-                    Log.d("datefind", "Found: "+start.toString()+" within: "+cDate.toString() +" at: "+t.startDate.toString());
+            Log.d("datefind", "{1} name: " + t.name + " start: " + start.toString() + " end: " + t.endDate.toString());
+            while (start.before(t.endDate) || start.equals(t.endDate)) {
+                if (start.equals(cDate) || start.toString().equals(cDate.toString())) { // Try to ignore time
+                    Log.d("datefind", "Found: " + start.toString() + " within: " + cDate.toString() + " at: " + t.startDate.toString());
                     occurs = true;
                     break;
                 }
-                start.setDate(start.getDate()+t.freq);
+                start.setDate(start.getDate() + t.freq);
             }
-            if(!occurs) {
+            if (!occurs) {
                 got.remove(i);
             }
         }

@@ -59,31 +59,31 @@
         app:layout_constraintTop_toBottomOf="@+id/mani_title"
         tools:text="@tools:sample/lorem[4:10]" />
 
-    <ImageButton
-        android:id="@+id/mani_edit"
-        android:layout_width="58dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="61dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mani_desc"
-        app:layout_constraintTop_toTopOf="@+id/mani_del"
-        android:src="@drawable/ic_alarm" />
+  <ImageButton
+      android:id="@+id/mani_edit"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_marginTop="3dp"
+      android:layout_marginEnd="61dp"
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_alarm"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/mani_desc"
+      app:layout_constraintTop_toTopOf="@+id/mani_del" />
 
     <ImageButton
         android:id="@+id/mani_del"
-        android:layout_width="56dp"
-        android:layout_height="55dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_row="0"
         android:layout_column="2"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="5dp"
         android:scaleType="fitXY"
+        android:src="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_check" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </GridLayout>
