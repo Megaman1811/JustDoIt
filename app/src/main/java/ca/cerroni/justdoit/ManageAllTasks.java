@@ -85,7 +85,6 @@ public class ManageAllTasks extends AppCompatActivity {
         adapter.set(dbc.getAllTasks(sort));
         adapter.notifyDataSetChanged();
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
