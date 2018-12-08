@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         cview = findViewById(R.id.calendarView);
 
         if(savedInstanceState != null) {
+            bootup = false;
             cview.setDate(savedInstanceState.getLong("pickedDate"));
         }
 
