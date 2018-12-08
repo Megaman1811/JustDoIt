@@ -58,9 +58,9 @@ public class AlertTimer extends TimerTask {
         Intent done = new Intent(cont, DoneReceiver.class);
         snooze.putExtra("TASK", tsk.id);
         done.putExtra("TASK", tsk.id);
-        rv.setOnClickPendingIntent(R.id.mani_edit, PendingIntent.getBroadcast(cont, 1298371211,
+        rv.setOnClickPendingIntent(R.id.mani_edit, PendingIntent.getBroadcast(cont, 108371211+tsk.id,
                 snooze, PendingIntent.FLAG_UPDATE_CURRENT));
-        rv.setOnClickPendingIntent(R.id.mani_del, PendingIntent.getBroadcast(cont, 1298371211,
+        rv.setOnClickPendingIntent(R.id.mani_del, PendingIntent.getBroadcast(cont, 128371211+tsk.id,
                 done, PendingIntent.FLAG_UPDATE_CURRENT));
 
         Notification nBuilder = new NotificationCompat.Builder(cont, "justdoitnotifs")

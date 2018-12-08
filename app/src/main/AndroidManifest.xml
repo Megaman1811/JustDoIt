@@ -20,7 +20,8 @@
             android:name=".ManageAllTasks"
             android:label="@string/title_activity_add_task"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".editTask"
+        <activity
+            android:name=".editTask"
             android:windowSoftInputMode="adjustPan" />
 
         <service
@@ -35,7 +36,10 @@
         <receiver
             android:name=".DoneReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".WelcomeActivity"></activity>
     </application>
 
 </manifest>

@@ -31,6 +31,18 @@ public class DatabaseConnector {
         rdb.close();
     }
 
+    public boolean getHelp() {
+        boolean ret = true;
+        Cursor c = rdb.query("help", null,
+                null, null, null, null, null);
+        if(c.moveToFirst()) ret = false;
+        return ret;
+    }
+
+    public void setHelp() {
+        wdb.insert("help", null, null);
+    }
+
     public Task insert(Task t) {
         Log.d("insert", "INSERT: "+t.startDate.toString());
         ContentValues cv = new ContentValues();
@@ -46,15 +58,18 @@ public class DatabaseConnector {
         cv.put("claimed", 0);
 
         wdb.insert("tasks", null, cv);
+        AlertTimer.tasks = getTasksByDate(new Date(new java.util.Date().getTime()));
         return t;
     }
 
     public void clear() throws SQLException {
         wdb.delete("tasks", null, null);
+        AlertTimer.tasks = getTasksByDate(new Date(new java.util.Date().getTime()));
     }
 
     public void del(int id) throws SQLException {
         wdb.delete("tasks", "id=?", new String[]{""+id});
+        AlertTimer.tasks = getTasksByDate(new Date(new java.util.Date().getTime()));
     }
 
     public void update(Task t) {
@@ -81,6 +96,7 @@ public class DatabaseConnector {
             cv.put("claimed", 0);
 
         wdb.update("tasks", cv, "id=?", new String[]{ ""+t.id });
+        AlertTimer.tasks = getTasksByDate(new Date(new java.util.Date().getTime()));
     }
 
     public Task getTask(int id) {

@@ -27,6 +27,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 "snooze integer," +
                 "claimed integer" +
                 ");");
+        db.execSQL("CREATE TABLE help (" +
+                "id integer primary key autoincrement"+
+                ");");
     }
 
     @Override

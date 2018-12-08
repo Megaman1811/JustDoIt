@@ -1,21 +1,12 @@
 package ca.cerroni.justdoit;
 
-import android.app.ActivityManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
@@ -28,18 +19,22 @@ public class MainActivity extends AppCompatActivity {
     CalendarView cview;
     Date cDate;
 
-    //ArrayList<Task> items = new ArrayList<>();
-
     ItemAdapter adapter;
+    boolean bootup = false;
+
+    public MainActivity() {
+        bootup = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         dbc = new DatabaseConnector(this);
         dbc.open();
-        //dbc.clear();
+        //dbc.clear(); // For use with test data
         tasks = findViewById(R.id.taskList);
 
         adapter = new ItemAdapter(this, R.layout.recycler_view_item,
@@ -68,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*Task t1 = new Task();
+        /* TEST DATA *//*
+        Task t1 = new Task();
         t1.name = "Task thing!";
         t1.notes = "It's a task";
         Date d1 = Date.valueOf("2018-12-08");
@@ -100,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         t3.freq = 1;
         t3.color = "ff0000";
         dbc.insert(t3);*/
-
         adapter.set(getTasksAtCurDate(dbc.getTasksByDate(cDate), cDate));
 
         adapter.notifyDataSetChanged();
@@ -111,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d("JDIService", "I'm runnin' 'ere!");
         }
+
+        //if(dbc.getHelp()) { // Commented for presentation/debug
+        //    dbc.setHelp();
+            if(bootup) {
+                Intent intent = new Intent(this, WelcomeActivity.class);
+                startActivity(intent);
+                bootup = false;
+            }
+        //}
     }
 
     public static ArrayList<Task> getTasksAtCurDate(ArrayList<Task> got, Date cDate) {
@@ -165,5 +169,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
         state.putLong("pickedDate", cDate.getTime());
+    }
+
+    public void aboutScreen(MenuItem item) {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 }

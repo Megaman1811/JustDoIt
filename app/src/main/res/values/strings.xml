@@ -5,4 +5,5 @@
     <string name="menuManageTask">Manage Tasks</string>
     <string name="AddTask">Add Task</string>
     <string name="SaveTask">Save Task</string>
+    <string name="abouttxt">About</string>
 </resources>

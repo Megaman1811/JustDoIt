@@ -5,6 +5,10 @@
 
     <item
         android:id="@+id/manageTask"
-        android:title="@string/menuManageTask"
-        android:onClick="manageScreen" />
+        android:onClick="manageScreen"
+        android:title="@string/menuManageTask" />
+    <item
+        android:id="@+id/about"
+        android:onClick="aboutScreen"
+        android:title="@string/abouttxt" />
 </menu>
